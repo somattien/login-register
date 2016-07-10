@@ -2,7 +2,7 @@
 <?php
 $localhost_admin	=	'localhost';
 $username_admin		=	'root';
-$password_admin		=	'root';
+$password_admin		=	'';
 $database_admin		=	'login_register';
 
 $connect_error = 'Sorry, We\'re experiencing connection proplems.';
