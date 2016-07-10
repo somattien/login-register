@@ -14,9 +14,6 @@ if(empty($_POST) === false){
 		}
 	}
     
-    
-
-    
     if(md5($_POST['current_password']) ===  $user_data[password]){
         
         if(trim($_POST['password']) !== trim($_POST['password_again'])){
