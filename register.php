@@ -44,7 +44,7 @@ if(empty($_POST) === false){
 <h1>Register (register.php)</h1>
 <?php
 if(isset($_GET['success']) && empty ($_GET['success'])){
-	echo 'You\'ve been registered successfuly!!!!!!!!!!!';
+	echo 'You\'ve been registered successfuly! Please check your email to activate your account.';
 } else { // 01 bat dau
     
 	if(empty($_POST) === false && empty($errors) === true){
@@ -55,6 +55,7 @@ if(isset($_GET['success']) && empty ($_GET['success'])){
 			'first_name' 	=> $_POST['first_name'],
 			'last_name' 	=> $_POST['last_name'],
 			'email'			=> $_POST['email'],
+            'email_code'	=> md5($_POST['username'] + microtime()),
 		);
 		//print_r ($register_data);
 		register_user($register_data);

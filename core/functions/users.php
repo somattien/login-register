@@ -1,4 +1,19 @@
 <?php
+//ativate from email
+function activate($email, $email_code){
+    $email = mysql_real_escape_string($email);
+    $email_code = mysql_real_escape_string($email_code);
+    
+    if(mysql_result(mysql_query("SELECT COUNT(user_id) FROM users WHERE email = '$email' AND email_code = '$email_code' AND active = 0"), 0) == 1){
+//        query to update user active status
+        mysql_query("UPDATE users SET active = 1 WHERE email = '$email'");
+        return true;
+    } else {
+        return false;
+    }
+    
+}
+
 //CHANGE PASSWORD
 function change_password($user_id, $password){
     $user_id = (int) $user_id;
@@ -16,6 +31,10 @@ function change_password($user_id, $password){
 			$data = '\'' .  implode ('\', \'', $register_data) . '\'';
 			mysql_query("INSERT INTO users ($fields) VALUES ($data)");
 			//print_r($register_data);
+            //email_code
+            email($register_data['email'], 'Activate your account', "Hello " . $register_data['first_name'] . ",\n\nYou need to activate your account, so use the link below:\n\nhttp://localhost/login-register/activate.php?email=" . $register_data['email'] . "&email_code=" . $register_data['email_code'] . " \n\n~somattien");
+            
+            
 		}
 //       DEM SO LUONG user dang ky da active
 		function user_count(){
