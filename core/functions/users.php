@@ -30,8 +30,8 @@ function change_password($user_id, $password){
 			$fields = '' .  implode (', ', array_keys($register_data)) . '';
 			$data = '\'' .  implode ('\', \'', $register_data) . '\'';
 			mysql_query("INSERT INTO users ($fields) VALUES ($data)");
-			//print_r($register_data);
-            //email_code
+            
+            //email($to, $subject, $body)
             email($register_data['email'], 'Activate your account', "Hello " . $register_data['first_name'] . ",\n\nYou need to activate your account, so use the link below:\n\nhttp://localhost/login-register/activate.php?email=" . $register_data['email'] . "&email_code=" . $register_data['email_code'] . " \n\n~somattien");
             
             

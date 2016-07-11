@@ -58,6 +58,7 @@ if(isset($_GET['success']) && empty ($_GET['success'])){
             'email_code'	=> md5($_POST['username'] + microtime()),
 		);
 		//print_r ($register_data);
+//        chay function dang ky
 		register_user($register_data);
 		//redirect
 		header('location: register.php?success');
