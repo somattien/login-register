@@ -9,11 +9,13 @@ if(isset($_GET['success']) && empty ($_GET['success'])){
 	<p>You're free to log in!</p>
 	<?php
 }else if (isset($_GET['email'], $_GET['email_code'])){
-    $email = trim($_get['email']);
-    $email_code = trim($_get['email_code']);
+    $email = trim($_GET['email']);
+    $email_code = trim($_GET['email_code']);
     
-    if($email_exist($email) === false){
-        $errors[] = 'Oops, somthing went wrong, and we couldn\'t find that email address';
+ 
+    
+    if(email_exists($email) === false){
+        $errors[] = 'Oops, something went wrong, and we couldn\'t find that email address';
     } else if(activate($email, $email_code) === false){
         $errors[] = 'We had problems your account';
     }

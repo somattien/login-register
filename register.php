@@ -29,7 +29,7 @@ if(empty($_POST) === false){
 		if($_POST['password'] !== $_POST['password_again']){
 			$errors[] ='Your password do not match.';
 		}
-		//validate
+		//validate activate email
 		if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false){
 			$errors[] ='A valid email address  is required';
 		}

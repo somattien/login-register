@@ -6,6 +6,7 @@ error_reporting(0); // ko xuat hien report connect database 0
 // conection database
 require 'database/connect.php';  /*khac voi include*/
 require 'functions/general.php';
+require 'functions/email.php';
 require 'functions/users.php';
 
 if(logged_in() === true){

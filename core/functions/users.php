@@ -3,7 +3,6 @@
 function activate($email, $email_code){
     $email = mysql_real_escape_string($email);
     $email_code = mysql_real_escape_string($email_code);
-    
     if(mysql_result(mysql_query("SELECT COUNT(user_id) FROM users WHERE email = '$email' AND email_code = '$email_code' AND active = 0"), 0) == 1){
 //        query to update user active status
         mysql_query("UPDATE users SET active = 1 WHERE email = '$email'");
@@ -31,8 +30,12 @@ function change_password($user_id, $password){
 			$data = '\'' .  implode ('\', \'', $register_data) . '\'';
 			mysql_query("INSERT INTO users ($fields) VALUES ($data)");
             
-            //email($to, $subject, $body)
-            email($register_data['email'], 'Activate your account', "Hello " . $register_data['first_name'] . ",\n\nYou need to activate your account, so use the link below:\n\nhttp://localhost/login-register/activate.php?email=" . $register_data['email'] . "&email_code=" . $register_data['email_code'] . " \n\n~somattien");
+            //send  email activate to your email - gui den email cua ban va` link ben duoi gui ve  trang activate.php de xu ly email($to, $first_name ,$subject, $body
+            /*email($register_data['email'], $register_data['first_name'], 'Activate your account', "Hello " . $register_data['first_name'] . ",\n\nYou need to activate your account, so use the link below:\n\nhttp://localhost/login-register/activate.php?email=" . $register_data['email'] . "&email_code=" . $register_data['email_code'] . " \n\n~somattien");*/
+            
+            
+            //email($to, $body)//
+            email ($register_data['email'], 'http://localhost/login-register/activate.php?email=' . $register_data["email"] . '&email_code=' . $register_data["email_code"]);
             
             
 		}
