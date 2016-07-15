@@ -1,5 +1,22 @@
 <?php
-//ativate from email
+
+
+//UPDATE SETTINGS
+function update_user($update_data){
+    global $session_user_id;
+    $update = array();
+	array_walk($update_data, 'array_sanitize');
+    
+    foreach($update_data as $field => $data){
+        $update[] = ' ' . $field . ' = \'' . $data . '\'';
+    }
+    
+    mysql_query("UPDATE users SET " . implode(',', $update) . " WHERE user_id = $session_user_id");
+}
+
+
+
+//ACTIVARE FROM EMAIL
 function activate($email, $email_code){
     $email = mysql_real_escape_string($email);
     $email_code = mysql_real_escape_string($email_code);
@@ -28,22 +45,18 @@ function change_password($user_id, $password){
 			
 			$fields = '' .  implode (', ', array_keys($register_data)) . '';
 			$data = '\'' .  implode ('\', \'', $register_data) . '\'';
-			mysql_query("INSERT INTO users ($fields) VALUES ($data)");
+			mysql_query("INSERT INTO users ($fields) VALUES ($data)");    
             
-            //send  email activate to your email - gui den email cua ban va` link ben duoi gui ve  trang activate.php de xu ly email($to, $first_name ,$subject, $body
-            /*email($register_data['email'], $register_data['first_name'], 'Activate your account', "Hello " . $register_data['first_name'] . ",\n\nYou need to activate your account, so use the link below:\n\nhttp://localhost/login-register/activate.php?email=" . $register_data['email'] . "&email_code=" . $register_data['email_code'] . " \n\n~somattien");*/
-            
-            
-            //email($to, $body)//
+            //email($to, $body) ----  SEND THE MAIL TO YOUR EMAIL
             email ($register_data['email'], 'http://localhost/login-register/activate.php?email=' . $register_data["email"] . '&email_code=' . $register_data["email_code"]);
-            
-            
 		}
-//       DEM SO LUONG user dang ky da active
+
+//DEM SO LUONG user dang ky da active
 		function user_count(){
 			return mysql_result(mysql_query("SELECT COUNT(user_id) FROM users WHERE active = 1"),0);
 		}
-		// LAY DU LIEU cua user
+
+// LAY DU LIEU cua user
 		function user_data($user_id){
 			$data = array();
 			$user_id = (int)$user_id;
