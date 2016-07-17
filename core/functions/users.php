@@ -1,5 +1,21 @@
 <?php
+//RECOVER
+function recover($mode, $email){
+    $mode       = sanitize($mode);
+    $email      = sanitize($email);
+    
+    $user_data  = user_data(user_id_from_email($email), 'first_name', 'username');
+    
+    if($mode == 'username'){
+        //email($to, $body) ----  SEND THE MAIL TO YOUR EMAIL
+       email($email, "Hello" . $user_data['first_name'] . ",\n\nYour username is: " . $user_data['username'] . "\n\n-somattien");
+        
+    }else if($mode == 'password'){
+        //recover password
 
+    }
+    
+}
 
 //UPDATE SETTINGS
 function update_user($update_data){
@@ -97,7 +113,12 @@ function change_password($user_id, $password){
 			$username = sanitize($username);
 			return mysql_result(mysql_query("SELECT user_id FROM users WHERE username = '$username'"), 0, 'user_id');// 1
 			}
-		
+
+		function user_id_from_email($email){
+			$email = sanitize($email);
+			return mysql_result(mysql_query("SELECT user_id FROM users WHERE email = '$email'"), 0, 'user_id');// 1
+			}
+
 		function login($username, $password){
 			$user_id = user_id_from_username($username);
 	
