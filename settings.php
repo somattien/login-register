@@ -40,7 +40,7 @@ if(isset($_GET['success']) === true && empty($_GET['success']) === true){
                 'last_name' 	=> $_POST['last_name'],
                 'email'			=> $_POST['email'],
             );
-            update_user($update_data);
+            update_user($session_user_id, $update_data);
             header('location: settings.php?success');
             exit();
     } else if (empty($errors) === false){

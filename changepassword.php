@@ -32,26 +32,30 @@ include 'includes/overall/header.php';
 ?>
   
 <h1>Change password (changepassword.php)</h1>
-<p>just a template.</p>
 
 
 <?php
 
-if(isset($_GET['success']) && empty ($_GET['success'])){
+if(isset($_GET['success']) === true && empty ($_GET['success']) === true){
 	echo 'Your password have been changed successfuly!!!!!!!!!!!';
-    
 } else{
+    if(isset($_GET['force']) === true && empty ($_GET['force']) === true){
+    ?>
+    
+    <p>you must change your password now that you've requested</p>
+    
+    <?php
+    }
+    if(empty($_POST) === false && empty($errors) === true){
+    //    post the form and no errors
+        change_password($session_user_id, $_POST['password']);
+        header ('location: changepassword.php?success');
 
-if(empty($_POST) === false && empty($errors) === true){
-//    post the form and no errors
-    change_password($session_user_id, $_POST['password']);
-    header ('location: changepassword.php?success');
-    
-    
-}else if(empty($errors) === false){
-//    out put errors
-    echo output_errors($errors);
-}
+
+    }else if(empty($errors) === false){
+    //    out put errors
+        echo output_errors($errors);
+    }
 
 ?>
 

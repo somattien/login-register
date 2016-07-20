@@ -15,6 +15,9 @@ function recover($mode, $email){
 
         $generated_password = substr(md5(rand(999, 999999)), 0 , 8);
         change_password($user_data['user_id'], $generated_password);
+
+        update_user($user_data['user_id'], array('password_recover' => '1'));
+
         email($email, "Your password recovery " . $user_data['first_name'] . ",\n\nYour password is: " . $generated_password . "\n\n Please log in to change - somattien");
         //die($generated_password);
     }
@@ -22,8 +25,8 @@ function recover($mode, $email){
 }
 
 //UPDATE SETTINGS
-function update_user($update_data){
-    global $session_user_id;
+function update_user($user_id, $update_data){
+    //global $session_user_id;
     $update = array();
 	array_walk($update_data, 'array_sanitize');
     
@@ -31,7 +34,7 @@ function update_user($update_data){
         $update[] = ' ' . $field . ' = \'' . $data . '\'';
     }
     
-    mysql_query("UPDATE users SET " . implode(',', $update) . " WHERE user_id = $session_user_id");
+    mysql_query("UPDATE users SET " . implode(',', $update) . " WHERE user_id = $user_id");
 }
 
 
@@ -55,7 +58,7 @@ function change_password($user_id, $password){
     $user_id = (int) $user_id;
     $password = md5 ($password);
     
-    mysql_query("UPDATE users SET password = '$password' WHERE user_id = '$user_id'");
+    mysql_query("UPDATE users SET password = '$password', password_recover = 0  WHERE user_id = '$user_id'");
 }
 
 //DANG KY

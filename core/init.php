@@ -10,15 +10,25 @@ require 'functions/general.php';
 require 'functions/users.php';
 require 'functions/email.php';
 
+// show link website
+$current_file = explode('/', $_SERVER['SCRIPT_NAME']);
+$current_file = end($current_file);
+//print_r($current_file);
+
 if(logged_in() === true){
 	$session_user_id = $_SESSION['user_id'];
-	$user_data = user_data($session_user_id, 'user_id', 'username', 'password', 'first_name', 'last_name', 'email');  // chay function user_data();
+	$user_data = user_data($session_user_id, 'user_id', 'username', 'password', 'first_name', 'last_name', 'email', 'password_recover');  // chay function user_data();
 	
 	if(user_active($user_data['username']) === false){
 		session_destroy();
-		header('location: index.php');
+		header('Location: index.php');
 		exit();
 	}
+//    && $current_file !== 'logout.php'
+    if($current_file !== 'changepassword.php'  && $user_data['password_recover'] == 1){
+        header('Location: changepassword.php?force');
+        exit();
+    }
 }
 
 
