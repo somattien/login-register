@@ -4,15 +4,19 @@ function recover($mode, $email){
     $mode       = sanitize($mode);
     $email      = sanitize($email);
     
-    $user_data  = user_data(user_id_from_email($email), 'first_name', 'username');
+    $user_data  = user_data(user_id_from_email($email), 'user_id', 'first_name', 'username');
     
     if($mode == 'username'){
         //email($to, $body) ----  SEND THE MAIL TO YOUR EMAIL
-       email($email, "Hello" . $user_data['first_name'] . ",\n\nYour username is: " . $user_data['username'] . "\n\n-somattien");
+       email($email, "Hello " . $user_data['first_name'] . ",\n\nYour username is: " . $user_data['username'] . "\n\n - somattien");
         
     }else if($mode == 'password'){
         //recover password
 
+        $generated_password = substr(md5(rand(999, 999999)), 0 , 8);
+        change_password($user_data['user_id'], $generated_password);
+        email($email, "Your password recovery " . $user_data['first_name'] . ",\n\nYour password is: " . $generated_password . "\n\n Please log in to change - somattien");
+        //die($generated_password);
     }
     
 }

@@ -5,7 +5,7 @@ include 'includes/overall/header.php';
 
 if(isset($_GET['success']) && empty ($_GET['success'])){
 	?>
-	<h2>Thank, we'have activated your account...</h2>
+	<h2>Thank, we have activated your account...</h2>
 	<p>You're free to log in!</p>
 	<?php
 }else if (isset($_GET['email'], $_GET['email_code'])){

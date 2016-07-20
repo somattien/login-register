@@ -32,12 +32,12 @@ $mail->Subject = 'Here is the subject';
 $mail->Body    = $body;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-//if(!$mail->send()) {
-//    echo 'Message could not be sent. <br>';
-//    echo 'Mailer Error: ' . $mail->ErrorInfo;
-//} else {
-//    echo 'Message has been sent';
-//}
+if(!$mail->send()) {
+    echo 'Message could not be sent. <br>';
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
+} else {
+    echo 'Message has been sent';
+}
 //tu them2
 }
 

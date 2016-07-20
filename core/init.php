@@ -6,8 +6,9 @@ error_reporting(0); // ko xuat hien report connect database 0
 // conection database
 require 'database/connect.php';  /*khac voi include*/
 require 'functions/general.php';
-require 'functions/email.php';
+
 require 'functions/users.php';
+require 'functions/email.php';
 
 if(logged_in() === true){
 	$session_user_id = $_SESSION['user_id'];
