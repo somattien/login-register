@@ -1,4 +1,15 @@
 <?php
+//ADMIN
+/*function is_admin($user_id){
+    $user_id = (int)$user_id;
+    return (mysql_result(mysql_query("SELECT COUNT(user_id) FROM users WHERE user_id = '$user_id' AND type = 1"), 0) == 1) ? true : false;
+}*/
+function has_access($user_id, $type){
+    $user_id = (int)$user_id;
+    $type = (int)$type;
+    return (mysql_result(mysql_query("SELECT COUNT(user_id) FROM users WHERE user_id = '$user_id' AND type = '$type'"), 0) == 1) ? true : false;
+}
+
 //RECOVER
 function recover($mode, $email){
     $mode       = sanitize($mode);
@@ -61,7 +72,7 @@ function change_password($user_id, $password){
     mysql_query("UPDATE users SET password = '$password', password_recover = 0  WHERE user_id = '$user_id'");
 }
 
-//DANG KY
+//REGISTER
 		function register_user($register_data){
 			array_walk($register_data, 'array_sanitize');
 			$register_data['password'] = md5($register_data['password']);

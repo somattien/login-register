@@ -17,6 +17,14 @@ function protect_page(){
         exit();
     }
 }
+//ADMIN
+function admin_protect(){
+    global $user_data;
+    if(has_access($user_data['user_id'], 1) === false){
+        header ('location: index.php');
+        exit();
+    }
+}
 
 
 // ham` loai bo cac ky tu dac biet
