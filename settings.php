@@ -1,10 +1,9 @@
 <?php
 include 'core/init.php';
 protect_page();
-
 include 'includes/overall/header.php';
+
 if(empty($_POST) === false){
-    
     $require_fields = array('first_name','email');
 	foreach($_POST as $key=>$value){
 		//echo $key;
@@ -21,24 +20,22 @@ if(empty($_POST) === false){
             $errors[] ='Sorry, the email\'' . $_POST['email'] . '\' is already in use.';
         }
     }
-    
-    
     print_r($errors);
 }
-
 ?>
 <h1>Settings (settings.php)</h1>
-
 <?php
 if(isset($_GET['success']) === true && empty($_GET['success']) === true){
 	echo 'Your deatils have been updated';
 } else{
     if(empty($_POST) === false && empty($errors) === true){
     //    update user details
+        echo $allow_email;
         $update_data = array(
                 'first_name' 	=> $_POST['first_name'],
                 'last_name' 	=> $_POST['last_name'],
                 'email'			=> $_POST['email'],
+                'allow_email'	=> ($_POST['allow_email'] == 'on') ? 1 : 0
             );
             update_user($session_user_id, $update_data);
             header('location: settings.php?success');
@@ -57,6 +54,9 @@ if(isset($_GET['success']) === true && empty($_GET['success']) === true){
     </li>
     <li> Email*: <br>
       <input type="text" name="email" value="<?php echo $user_data['email'] ?>">
+    </li>
+    <li> Allow email <br>
+      <label><input type="checkbox" name="allow_email" <?php if($user_data['allow_email'] == 1){echo'checked';} ?> />Would you like to receive email from us?</label>
     </li>
     <li>
       <input type="submit" value="Update">
